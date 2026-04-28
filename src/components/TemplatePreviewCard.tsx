@@ -47,7 +47,7 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
     const displayH = Math.round(info.height * scale)
 
     return (
-      <div style={{ width: displayW, height: displayH, overflow: 'hidden', position: 'relative', background: '#f5f5f5', flexShrink: 0 }}>
+      <div style={{ width: displayW, height: displayH, overflow: 'hidden', position: 'relative', background: 'var(--bg-base)', flexShrink: 0 }}>
         <img
           src={aiImage}
           alt="AI Generated"
@@ -69,44 +69,46 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
     return (
       <div style={{
         display: 'flex',
-        gap: 8,
-        padding: 8,
-        background: 'rgba(0,0,0,0.03)',
-        borderTop: '1px solid #f0f0f0'
+        gap: 6,
+        padding: '6px 8px',
+        background: 'var(--bg-panel)',
+        borderTop: '1px solid var(--border-dim)',
       }}>
         <button
           onClick={() => onModeSwitch?.(templateId, 'manual')}
           style={{
             flex: 1,
-            padding: '6px 12px',
-            borderRadius: 8,
-            border: mode === 'manual' ? '2px solid #1677ff' : '1px solid #d9d9d9',
-            background: mode === 'manual' ? '#e6f4ff' : '#fff',
-            color: mode === 'manual' ? '#1677ff' : '#333',
-            fontSize: 12,
-            fontWeight: 600,
+            padding: '5px 10px',
+            borderRadius: 5,
+            border: mode === 'manual' ? '1px solid var(--border-mid)' : '1px solid transparent',
+            background: mode === 'manual' ? 'var(--bg-elevated)' : 'transparent',
+            color: mode === 'manual' ? 'var(--text-hi)' : 'var(--text-lo)',
+            fontSize: 11,
+            fontWeight: mode === 'manual' ? 600 : 400,
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.15s',
+            fontFamily: 'ChillRoundF, sans-serif',
           }}
         >
-          ✏️ 手动编辑
+          ✏️ 手动
         </button>
         <button
           onClick={() => onModeSwitch?.(templateId, 'ai')}
           style={{
             flex: 1,
-            padding: '6px 12px',
-            borderRadius: 8,
-            border: mode === 'ai' ? '2px solid #52c41a' : '1px solid #d9d9d9',
-            background: mode === 'ai' ? '#e6f7e6' : '#fff',
-            color: mode === 'ai' ? '#52c41a' : '#333',
-            fontSize: 12,
-            fontWeight: 600,
+            padding: '5px 10px',
+            borderRadius: 5,
+            border: mode === 'ai' ? '1px solid var(--border-mid)' : '1px solid transparent',
+            background: mode === 'ai' ? 'var(--bg-elevated)' : 'transparent',
+            color: mode === 'ai' ? 'var(--text-hi)' : 'var(--text-lo)',
+            fontSize: 11,
+            fontWeight: mode === 'ai' ? 600 : 400,
             cursor: 'pointer',
-            transition: 'all 0.2s'
+            transition: 'all 0.15s',
+            fontFamily: 'ChillRoundF, sans-serif',
           }}
         >
-          🤖 AI 生成
+          🤖 AI
         </button>
       </div>
     )
@@ -125,16 +127,16 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
     // 检查是否AI模式
     if (mode === 'ai' && aiImage) {
       return (
-        <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+        <div style={{ background: 'var(--bg-elevated)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border-dim)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
           {renderExportTemplate()}
           {renderAIMode(scale)}
           {renderModeSwitcher()}
           {/* Footer */}
-          <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+          <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-dim)', flexShrink: 0, background: 'var(--bg-panel)' }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-mid)', fontFamily: 'ChillRoundF, sans-serif' }}>
               {info.label}
             </span>
-            <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+            <span style={{ fontSize: 10, color: 'var(--text-lo)', fontFamily: 'monospace' }}>
               {info.width}×{info.height}
             </span>
           </div>
@@ -143,7 +145,7 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
     }
 
     return (
-      <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+      <div style={{ background: 'var(--bg-elevated)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border-dim)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
         {/* Hidden export template */}
         {renderExportTemplate()}
         
@@ -206,11 +208,11 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
         {renderModeSwitcher()}
 
         {/* Footer */}
-        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
-          <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-dim)', flexShrink: 0, background: 'var(--bg-panel)' }}>
+          <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-mid)', fontFamily: 'ChillRoundF, sans-serif' }}>
             {info.label}
           </span>
-          <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+          <span style={{ fontSize: 10, color: 'var(--text-lo)', fontFamily: 'monospace' }}>
             {info.width}×{info.height}
           </span>
         </div>
@@ -228,16 +230,16 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
     // 检查是否AI模式
     if (mode === 'ai' && aiImage) {
       return (
-        <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+        <div style={{ background: 'var(--bg-elevated)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border-dim)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
           {renderExportTemplate()}
           {renderAIMode(scale)}
           {renderModeSwitcher()}
           {/* Footer */}
-          <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+          <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-dim)', flexShrink: 0, background: 'var(--bg-panel)' }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-mid)', fontFamily: 'ChillRoundF, sans-serif' }}>
               {info.label}
             </span>
-            <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+            <span style={{ fontSize: 10, color: 'var(--text-lo)', fontFamily: 'monospace' }}>
               {info.width}×{info.height}
             </span>
           </div>
@@ -248,7 +250,7 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
     const hasOverlayOffset = (ctx.overlayX ?? 0) !== 0 || (ctx.overlayY ?? 0) !== 0
 
     return (
-      <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+      <div style={{ background: 'var(--bg-elevated)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border-dim)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
         {/* Hidden export template */}
         {renderExportTemplate()}
 
@@ -349,11 +351,11 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
         {renderModeSwitcher()}
 
         {/* Footer */}
-        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
-          <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-dim)', flexShrink: 0, background: 'var(--bg-panel)' }}>
+          <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-mid)', fontFamily: 'ChillRoundF, sans-serif' }}>
             {info.label}
           </span>
-          <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+          <span style={{ fontSize: 10, color: 'var(--text-lo)', fontFamily: 'monospace' }}>
             {info.width}×{info.height}
           </span>
         </div>
@@ -367,16 +369,16 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
   // 检查是否AI模式
   if (mode === 'ai' && aiImage) {
     return (
-      <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+      <div style={{ background: 'var(--bg-elevated)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border-dim)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
         {renderExportTemplate()}
         {renderAIMode(scale)}
         {renderModeSwitcher()}
         {/* Footer */}
-        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
-          <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-dim)', flexShrink: 0, background: 'var(--bg-panel)' }}>
+          <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-mid)', fontFamily: 'ChillRoundF, sans-serif' }}>
             {info.label}
           </span>
-          <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+          <span style={{ fontSize: 10, color: 'var(--text-lo)', fontFamily: 'monospace' }}>
             {info.width}×{info.height}
           </span>
         </div>
@@ -388,11 +390,11 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
   const displayH = Math.round(info.height * scale)
 
   return (
-    <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+    <div style={{ background: 'var(--bg-elevated)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border-dim)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
       {/* Hidden export template */}
       {renderExportTemplate()}
-      
-      <div style={{ width: displayW, height: displayH, overflow: 'visible', position: 'relative', background: '#f5f5f5', flexShrink: 0 }}>
+
+      <div style={{ width: displayW, height: displayH, overflow: 'visible', position: 'relative', background: 'var(--bg-base)', flexShrink: 0 }}>
         <div style={{ width: info.width, height: info.height, transform: `scale(${scale})`, transformOrigin: 'top left', flexShrink: 0 }}>
           <div style={{ width: info.width, height: info.height, position: 'relative' }}>
             <CanvasProvider scale={scale} forExport={false}>
@@ -405,11 +407,11 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
       {renderModeSwitcher()}
 
       {/* Footer */}
-      <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
-        <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+      <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-dim)', flexShrink: 0, background: 'var(--bg-panel)' }}>
+        <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-mid)', fontFamily: 'ChillRoundF, sans-serif' }}>
           {info.label}
         </span>
-        <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+        <span style={{ fontSize: 10, color: 'var(--text-lo)', fontFamily: 'monospace' }}>
           {info.width}×{info.height}
         </span>
       </div>

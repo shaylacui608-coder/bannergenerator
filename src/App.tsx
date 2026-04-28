@@ -260,33 +260,33 @@ export default function App() {
   }
 
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      background: '#000',
-      color: '#fff', 
+    <div style={{
+      minHeight: '100vh',
+      background: 'var(--bg-base)',
+      color: 'var(--text-hi)',
       fontFamily: 'ChillRoundF, DouyinSans, sans-serif',
-      backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px)',
+      backgroundImage: 'radial-gradient(circle, var(--dot-grid) 1px, transparent 1px)',
       backgroundSize: '24px 24px',
       backgroundPosition: '0 0'
     }}>
 
       <div style={{ display: 'flex', height: '100vh' }}>
-        <div style={{ width: 340, display: 'flex', flexDirection: 'column', flexShrink: 0, height: '100vh', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.6)', backdropFilter: 'blur(2px)', WebkitBackdropFilter: 'blur(2px)', borderRadius: '0 24px 24px 0' }}>
+        <div style={{ width: 340, display: 'flex', flexDirection: 'column', flexShrink: 0, height: '100vh', background: 'var(--bg-panel)', borderRight: '1px solid var(--border-dim)' }}>
           <div style={{ padding: 28, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 28, flex: 1 }}>
             <button
               onClick={() => setCurrentPage('home')}
               style={{
-                padding: '10px 16px',
-                border: '1px solid rgba(255,255,255,0.3)',
-                borderRadius: 9999,
+                padding: '8px 14px',
+                border: '1px solid var(--border-dim)',
+                borderRadius: 8,
                 background: 'transparent',
-                color: '#fff',
-                fontSize: 14,
+                color: 'var(--text-mid)',
+                fontSize: 13,
                 fontWeight: 600,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
+                gap: 6,
                 width: 'fit-content'
               }}
             >
@@ -294,14 +294,14 @@ export default function App() {
             </button>
 
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: 14, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: 2, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-lo)', marginBottom: 10, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                 活动场景
               </div>
               <CampaignSelector campaigns={CAMPAIGNS} selected={campaignId} onSelect={handleCampaignChange} />
             </div>
 
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: 14, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: 2, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-lo)', marginBottom: 10, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                 内容填写
               </div>
               <ContentForm content={content} colors={campaign.colors} onChange={setContent} formConfig={campaign.formConfig} />
@@ -310,61 +310,62 @@ export default function App() {
             <AssetLibrarySection campaignId={campaignId} />
 
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: 14, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: 2, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-lo)', marginBottom: 10, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                 动效设置
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: 'rgba(255,255,255,0.08)', borderRadius: 12 }}>
-                <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.9)', fontFamily: 'ChillRoundF, DouyinSans, sans-serif' }}>
-                  上下浮动动效
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '11px 14px', background: 'var(--bg-elevated)', borderRadius: 10, border: '1px solid var(--border-dim)' }}>
+                <div style={{ fontSize: 13, color: 'var(--text-mid)', fontFamily: 'ChillRoundF, DouyinSans, sans-serif' }}>
+                  浮动动效
                 </div>
                 <button
                   onClick={() => setAnimationEnabled(!animationEnabled)}
                   style={{
-                    width: 48,
-                    height: 26,
-                    borderRadius: 13,
+                    width: 42,
+                    height: 24,
+                    borderRadius: 12,
                     border: 'none',
                     cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    background: animationEnabled ? 'linear-gradient(135deg, #52c41a, #73d13d)' : 'rgba(255,255,255,0.2)',
-                    position: 'relative'
+                    transition: 'background 0.2s',
+                    background: animationEnabled ? 'var(--accent)' : 'var(--border-mid)',
+                    position: 'relative',
+                    flexShrink: 0,
                   }}
                 >
                   <div style={{
                     position: 'absolute',
                     top: 3,
-                    left: animationEnabled ? 25 : 3,
-                    width: 20,
-                    height: 20,
+                    left: animationEnabled ? 21 : 3,
+                    width: 18,
+                    height: 18,
                     borderRadius: '50%',
-                    background: '#fff',
-                    transition: 'all 0.2s',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                    background: 'var(--text-hi)',
+                    transition: 'left 0.2s',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.4)',
                   }} />
                 </button>
               </div>
             </div>
           </div>
           
-          <div style={{ padding: '16px 28px', borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: 10, flexShrink: 0, flexDirection: 'column' }}>
-            <div style={{ display: 'flex', gap: 10 }}>
+          <div style={{ padding: '16px 24px', borderTop: '1px solid var(--border-dim)', display: 'flex', gap: 8, flexShrink: 0, flexDirection: 'column' }}>
+            <div style={{ display: 'flex', gap: 8 }}>
               <button
                 onClick={reseedAll}
-                style={{ flex: 1, border: 'none', borderRadius: 9999, padding: '12px 0', fontSize: 14, fontWeight: 600, cursor: 'pointer', color: 'rgba(255,255,255,0.9)', transition: 'all 0.2s', background: 'rgba(255,255,255,0.1)' }}
+                style={{ flex: 1, border: '1px solid var(--border-mid)', borderRadius: 10, padding: '11px 0', fontSize: 13, fontWeight: 600, cursor: 'pointer', color: 'var(--text-mid)', transition: 'all 0.15s', background: 'transparent' }}
               >
                 🎲 换一版
               </button>
               <button
                 onClick={handleExportAll}
                 disabled={exporting}
-                style={{ flex: 1, border: 'none', borderRadius: 9999, padding: '12px 0', fontSize: 14, fontWeight: 700, cursor: exporting ? 'not-allowed' : 'pointer', color: exporting ? 'rgba(255,255,255,0.4)' : '#fff', transition: 'all 0.2s', background: 'rgba(255,255,255,0.15)' }}
+                style={{ flex: 1, border: 'none', borderRadius: 10, padding: '11px 0', fontSize: 13, fontWeight: 700, cursor: exporting ? 'not-allowed' : 'pointer', color: exporting ? 'rgba(0,0,0,0.35)' : '#0a0a0f', transition: 'all 0.15s', background: exporting ? 'oklch(0.70 0.005 265)' : 'var(--text-hi)' }}
               >
-                {exporting ? '导出中…' : '⬇ 下载全套'}
+                {exporting ? '导出中…' : '↓ 下载全套'}
               </button>
             </div>
             <button
               onClick={() => { resetAllDragState(); window.location.reload() }}
-              style={{ width: '100%', border: 'none', borderRadius: 9999, padding: '10px 0', fontSize: 13, fontWeight: 600, cursor: 'pointer', color: 'rgba(255,255,255,0.6)', transition: 'all 0.2s', background: 'rgba(255,255,255,0.06)' }}
+              style={{ width: '100%', border: 'none', borderRadius: 8, padding: '8px 0', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text-lo)', transition: 'all 0.15s', background: 'transparent' }}
             >
               ↺ 重置位置
             </button>
@@ -403,7 +404,7 @@ export default function App() {
                       animationEnabled={animationEnabled}
                     />
                     
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, padding: 12, backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 12 }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, padding: '10px 12px', backgroundColor: 'var(--bg-elevated)', borderRadius: 10, border: '1px solid var(--border-dim)' }}>
                       <FontSizeSelector
                         templateId={id}
                         elementKey="title"
@@ -422,23 +423,23 @@ export default function App() {
                       <div style={{ display: 'flex', gap: 10 }}>
                         <button
                           onClick={() => reseed(id)}
-                          style={{ flex: 1, border: 'none', borderRadius: 12, padding: '10px 0', fontSize: 13, fontWeight: 600, cursor: 'pointer', color: 'rgba(255,255,255,0.8)', transition: 'all 0.2s', background: 'rgba(255,255,255,0.1)' }}
+                          style={{ flex: 1, border: '1px solid var(--border-dim)', borderRadius: 8, padding: '9px 0', fontSize: 12, fontWeight: 600, cursor: 'pointer', color: 'var(--text-mid)', transition: 'all 0.15s', background: 'transparent' }}
                         >
                           🎲 换这张
                         </button>
                         <button
                           onClick={() => handleExportSingle(id, 'png')}
                           disabled={exporting}
-                          style={{ flex: 1, border: 'none', borderRadius: 12, padding: '10px 0', fontSize: 13, fontWeight: 600, cursor: exporting ? 'not-allowed' : 'pointer', color: exporting ? 'rgba(255,255,255,0.4)' : '#fff', transition: 'all 0.2s', background: 'rgba(255,255,255,0.15)' }}
+                          style={{ flex: 1, border: 'none', borderRadius: 8, padding: '9px 0', fontSize: 12, fontWeight: 700, cursor: exporting ? 'not-allowed' : 'pointer', color: exporting ? 'rgba(0,0,0,0.3)' : '#0a0a0f', transition: 'all 0.15s', background: exporting ? 'oklch(0.65 0.005 265)' : 'var(--text-hi)' }}
                         >
-                          🖼 导出PNG
+                          ↓ 导出 PNG
                         </button>
                       </div>
                       {animationEnabled && (
                         <button
                           onClick={() => handleExportSingle(id, 'gif')}
                           disabled={exporting}
-                          style={{ width: '100%', border: 'none', borderRadius: 12, padding: '10px 0', fontSize: 13, fontWeight: 600, cursor: exporting ? 'not-allowed' : 'pointer', color: exporting ? 'rgba(255,255,255,0.4)' : '#fff', transition: 'all 0.2s', background: 'linear-gradient(135deg, #52c41a, #73d13d)' }}
+                          style={{ width: '100%', border: 'none', borderRadius: 8, padding: '9px 0', fontSize: 12, fontWeight: 600, cursor: exporting ? 'not-allowed' : 'pointer', color: exporting ? 'rgba(255,255,255,0.4)' : '#fff', transition: 'all 0.15s', background: 'oklch(0.52 0.16 145)' }}
                         >
                           🎬 导出GIF
                         </button>
@@ -450,27 +451,27 @@ export default function App() {
             </div>
           </div>
 
-          <div style={{ width: 140, display: 'flex', flexDirection: 'column', flexShrink: 0, height: '100vh', padding: '32px 16px', gap: 24, background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.6)', backdropFilter: 'blur(2px)', WebkitBackdropFilter: 'blur(2px)', borderRadius: '24px 0 0 24px' }}>
+          <div style={{ width: 132, display: 'flex', flexDirection: 'column', flexShrink: 0, height: '100vh', padding: '28px 14px', gap: 24, background: 'var(--bg-panel)', borderLeft: '1px solid var(--border-dim)' }}>
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: 12, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: 2, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-lo)', marginBottom: 10, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                 类型
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', borderRadius: 12, padding: 6, gap: 4, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.6)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {allSections.map(s => (
                   <button
                     key={s}
                     onClick={() => handleSectionSwitch(s)}
                     style={{
-                      padding: '12px 16px',
-                      background: currentSection === s ? 'rgba(255,255,255,0.15)' : 'transparent',
+                      padding: '9px 12px',
+                      background: currentSection === s ? 'var(--bg-elevated)' : 'transparent',
                       border: 'none',
-                      borderRadius: 8,
-                      fontSize: 13,
-                      fontWeight: 600,
+                      borderRadius: 7,
+                      fontSize: 12,
+                      fontWeight: currentSection === s ? 700 : 500,
                       cursor: 'pointer',
                       fontFamily: 'ChillRoundF, DouyinSans, sans-serif',
-                      color: currentSection === s ? '#fff' : 'rgba(255,255,255,0.6)',
-                      transition: 'all 0.2s',
+                      color: currentSection === s ? 'var(--text-hi)' : 'var(--text-mid)',
+                      transition: 'all 0.15s',
                       textAlign: 'left'
                     }}
                   >
@@ -481,24 +482,25 @@ export default function App() {
             </div>
 
             <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: 12, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: 2, textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-lo)', marginBottom: 10, fontFamily: 'ChillRoundF, DouyinSans, sans-serif', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                 平台
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', borderRadius: 12, padding: 6, gap: 4, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.6)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {sectionPlatforms.map(p => (
                   <button
                     key={p}
                     onClick={() => handlePlatformSwitch(p)}
                     style={{
-                      padding: '12px 16px',
-                      background: activePlatform === p ? 'rgba(255,255,255,0.15)' : 'transparent',
+                      padding: '9px 12px',
+                      background: activePlatform === p ? 'var(--bg-elevated)' : 'transparent',
                       border: 'none',
-                      borderRadius: 8,
-                      fontSize: 13, fontWeight: 600,
+                      borderRadius: 7,
+                      fontSize: 12,
+                      fontWeight: activePlatform === p ? 700 : 500,
                       cursor: 'pointer',
                       fontFamily: 'ChillRoundF, DouyinSans, sans-serif',
-                      color: activePlatform === p ? '#fff' : 'rgba(255,255,255,0.6)',
-                      transition: 'all 0.2s',
+                      color: activePlatform === p ? 'var(--text-hi)' : 'var(--text-mid)',
+                      transition: 'all 0.15s',
                       textAlign: 'left'
                     }}
                   >

@@ -119,12 +119,12 @@ function GradientColorSlider({ primary, onChangePrimary }: {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <label style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.6)', fontFamily: 'ChillRoundF, sans-serif' }}>
+        <label style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-lo)', fontFamily: 'ChillRoundF, sans-serif', letterSpacing: '0.10em', textTransform: 'uppercase' }}>
           渐变主色
         </label>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 14, height: 14, borderRadius: 4, background: currentColor, border: '1.5px solid rgba(255,255,255,0.4)', flexShrink: 0 }} />
-          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>
+          <div style={{ width: 12, height: 12, borderRadius: 3, background: currentColor, border: '1px solid var(--border-mid)', flexShrink: 0 }} />
+          <span style={{ fontSize: 10, color: 'var(--text-lo)', fontFamily: 'monospace' }}>
             {currentColor.toUpperCase()}
           </span>
         </div>
@@ -235,11 +235,12 @@ function Field({
     <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
       <label
         style={{
-          fontSize: 12,
-          fontWeight: 600,
-          color: 'rgba(255,255,255,0.6)',
+          fontSize: 10,
+          fontWeight: 500,
+          color: 'var(--text-lo)',
           fontFamily: 'ChillRoundF, sans-serif',
-          letterSpacing: 0.5,
+          letterSpacing: '0.10em',
+          textTransform: 'uppercase',
         }}
       >
         {label}
@@ -249,18 +250,18 @@ function Field({
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
         style={{
-          border: '1.5px solid rgba(255,255,255,0.15)',
-          borderRadius: 8,
-          padding: '8px 12px',
-          fontSize: 14,
+          border: '1px solid var(--border-dim)',
+          borderRadius: 6,
+          padding: '7px 10px',
+          fontSize: 13,
           fontFamily: 'ChillRoundF, sans-serif',
           outline: 'none',
           transition: 'border-color 0.15s',
-          background: 'rgba(255,255,255,0.05)',
-          color: '#fff'
+          background: 'var(--bg-elevated)',
+          color: 'var(--text-hi)',
         }}
-        onFocus={e => (e.target.style.borderColor = '#FF2C19')}
-        onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.15)')}
+        onFocus={e => (e.target.style.borderColor = 'var(--accent)')}
+        onBlur={e => (e.target.style.borderColor = 'var(--border-dim)')}
       />
     </div>
   )
@@ -323,10 +324,10 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
       {/* Tags */}
       {showTags && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <label style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.6)', fontFamily: 'ChillRoundF, sans-serif' }}>
+          <label style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-lo)', fontFamily: 'ChillRoundF, sans-serif', letterSpacing: '0.10em', textTransform: 'uppercase' }}>
             标签 Pills（最多 3 个）
           </label>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             {[0, 1, 2].map(i => (
               <input
                 key={i}
@@ -334,17 +335,17 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
                 onChange={e => setTag(i)(e.target.value)}
                 placeholder={['流量大曝光', '300元补贴金', '平台货补扶持'][i]}
                 style={{
-                  border: '1.5px solid rgba(255,255,255,0.15)',
-                  borderRadius: 8,
-                  padding: '8px 12px',
-                  fontSize: 14,
+                  border: '1px solid var(--border-dim)',
+                  borderRadius: 6,
+                  padding: '7px 10px',
+                  fontSize: 13,
                   fontFamily: 'ChillRoundF, sans-serif',
                   outline: 'none',
-                  background: 'rgba(255,255,255,0.05)',
-                  color: '#fff'
+                  background: 'var(--bg-elevated)',
+                  color: 'var(--text-hi)',
                 }}
-                onFocus={e => (e.target.style.borderColor = '#FF2C19')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.15)')}
+                onFocus={e => (e.target.style.borderColor = 'var(--accent)')}
+                onBlur={e => (e.target.style.borderColor = 'var(--border-dim)')}
               />
             ))}
           </div>
@@ -364,7 +365,7 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
 
       {/* Custom Colors */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        <label style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.6)', fontFamily: 'ChillRoundF, sans-serif' }}>
+        <label style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-lo)', fontFamily: 'ChillRoundF, sans-serif', letterSpacing: '0.10em', textTransform: 'uppercase' }}>
           自定义颜色
         </label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -375,7 +376,7 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
             { key: 'textOnLight' as const, label: '浅色背景文字' },
           ].map(({ key, label }) => (
             <div key={key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <label style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontFamily: 'ChillRoundF, sans-serif' }}>
+              <label style={{ fontSize: 9, color: 'var(--text-lo)', fontFamily: 'ChillRoundF, sans-serif' }}>
                 {label}
               </label>
               <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
@@ -384,12 +385,13 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
                   value={getCurrentColor(key)}
                   onChange={(e) => setCustomColor(key, e.target.value)}
                   style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 8,
-                    border: 'none',
+                    width: 36,
+                    height: 36,
+                    borderRadius: 6,
+                    border: '1px solid var(--border-dim)',
                     cursor: 'pointer',
-                    padding: 0,
+                    padding: 2,
+                    background: 'var(--bg-elevated)',
                   }}
                 />
                 <input
@@ -397,12 +399,12 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
                   value={getCurrentColor(key)}
                   onChange={(e) => setCustomColor(key, e.target.value)}
                   style={{
-                    width: 70,
-                    padding: '4px 8px',
-                    borderRadius: 6,
-                    border: '1.5px solid rgba(255,255,255,0.15)',
-                    background: 'rgba(255,255,255,0.05)',
-                    color: '#fff',
+                    width: 66,
+                    padding: '4px 6px',
+                    borderRadius: 5,
+                    border: '1px solid var(--border-dim)',
+                    background: 'var(--bg-elevated)',
+                    color: 'var(--text-mid)',
                     fontSize: 10,
                     fontFamily: 'monospace',
                     outline: 'none',
@@ -415,24 +417,24 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
       </div>
 
       {/* Font Selection */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <label style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.6)', fontFamily: 'ChillRoundF, sans-serif' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <label style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-lo)', fontFamily: 'ChillRoundF, sans-serif', letterSpacing: '0.10em', textTransform: 'uppercase' }}>
           字体选择
         </label>
         {(['title', 'subtitle'] as const).map((fontType) => (
           <div key={fontType} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <label style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontFamily: 'ChillRoundF, sans-serif' }}>
+            <label style={{ fontSize: 9, color: 'var(--text-lo)', fontFamily: 'ChillRoundF, sans-serif' }}>
               {fontType === 'title' ? '标题字体' : '副标题字体'}
             </label>
             <select
               value={content.fonts?.[fontType] || ''}
               onChange={(e) => setFont(fontType, e.target.value)}
               style={{
-                padding: '8px 12px',
-                borderRadius: 8,
-                border: '1.5px solid rgba(255,255,255,0.15)',
-                background: 'rgba(255,255,255,0.05)',
-                color: '#fff',
+                padding: '7px 10px',
+                borderRadius: 6,
+                border: '1px solid var(--border-dim)',
+                background: 'var(--bg-elevated)',
+                color: 'var(--text-hi)',
                 fontSize: 13,
                 fontFamily: 'ChillRoundF, sans-serif',
                 outline: 'none',
@@ -452,28 +454,27 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
 
       {/* Title size adjust */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <label style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.6)', fontFamily: 'ChillRoundF, sans-serif' }}>
-            标题字号
-          </label>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <label style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-lo)', fontFamily: 'ChillRoundF, sans-serif', letterSpacing: '0.10em', textTransform: 'uppercase' }}>
+          标题字号
+        </label>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button
             onClick={() => onChange({ ...content, titleSizeAdjust: Math.max(-10, content.titleSizeAdjust - 1) })}
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              border: '1.5px solid rgba(255,255,255,0.3)',
-              background: 'rgba(255,255,255,0.08)',
-              color: '#fff',
-              fontSize: 20,
-              fontWeight: 700,
+              width: 36,
+              height: 36,
+              borderRadius: 6,
+              border: '1px solid var(--border-mid)',
+              background: 'var(--bg-elevated)',
+              color: 'var(--text-mid)',
+              fontSize: 18,
+              fontWeight: 400,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'all 0.15s'
+              transition: 'all 0.15s',
+              flexShrink: 0,
             }}
           >
             −
@@ -483,33 +484,34 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: 40,
-            borderRadius: 10,
-            border: '1.5px solid rgba(255,255,255,0.15)',
-            background: 'rgba(255,255,255,0.05)',
-            color: content.titleSizeAdjust === 0 ? 'rgba(255,255,255,0.6)' : '#fff',
-            fontSize: 14,
-            fontWeight: 600,
-            fontFamily: 'ChillRoundF, sans-serif'
+            height: 36,
+            borderRadius: 6,
+            border: '1px solid var(--border-dim)',
+            background: 'var(--bg-elevated)',
+            color: content.titleSizeAdjust === 0 ? 'var(--text-lo)' : 'var(--text-hi)',
+            fontSize: 13,
+            fontWeight: 500,
+            fontFamily: 'ChillRoundF, sans-serif',
           }}>
             {content.titleSizeAdjust > 0 ? `+${content.titleSizeAdjust}px` : content.titleSizeAdjust < 0 ? `${content.titleSizeAdjust}px` : 'Default'}
           </div>
           <button
             onClick={() => onChange({ ...content, titleSizeAdjust: Math.min(10, content.titleSizeAdjust + 1) })}
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              border: '1.5px solid rgba(255,255,255,0.3)',
-              background: 'rgba(255,255,255,0.08)',
-              color: '#fff',
-              fontSize: 20,
-              fontWeight: 700,
+              width: 36,
+              height: 36,
+              borderRadius: 6,
+              border: '1px solid var(--border-mid)',
+              background: 'var(--bg-elevated)',
+              color: 'var(--text-mid)',
+              fontSize: 18,
+              fontWeight: 400,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'all 0.15s'
+              transition: 'all 0.15s',
+              flexShrink: 0,
             }}
           >
             +
@@ -522,9 +524,9 @@ export function ContentForm({ content, colors, onChange, formConfig }: Props) {
           step={1}
           value={content.titleSizeAdjust}
           onChange={e => onChange({ ...content, titleSizeAdjust: Number(e.target.value) })}
-          style={{ width: '100%', accentColor: '#FF2C19', cursor: 'pointer' }}
+          style={{ width: '100%', accentColor: 'var(--accent)', cursor: 'pointer' }}
         />
-        <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontFamily: 'PingFang SC, sans-serif', margin: 0, lineHeight: 1.4 }}>
+        <p style={{ fontSize: 10, color: 'var(--text-lo)', fontFamily: 'PingFang SC, sans-serif', margin: 0, lineHeight: 1.4 }}>
           副标题固定 PingFang 12px，不受此影响
         </p>
       </div>
