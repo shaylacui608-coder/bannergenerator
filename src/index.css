@@ -1,0 +1,79 @@
+@font-face {
+  font-family: 'DouyinSans';
+  src: url('/fonts/douyinsans.ttf') format('truetype');
+  font-weight: 400 900;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'ZhanKuButter';
+  src: url('/fonts/站酷庆科黄油体.ttf') format('truetype');
+  font-weight: 900;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'ChillRoundF';
+  src: url('/fonts/ChillRoundFBold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'ChillRoundF';
+  src: url('/fonts/ChillRoundFRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'CangErRound';
+  src: url('/fonts/仓耳舒圆体W02.ttf') format('truetype');
+  font-weight: 400;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'CangErInk';
+  src: url('/fonts/仓耳与墨W05.ttf') format('truetype');
+  font-weight: 400;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'ZhanKuWenYi';
+  src: url('/fonts/站酷文艺体.ttf') format('truetype');
+  font-weight: 400;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'YuanHei';
+  src: url('/fonts/yuanhei.ttf') format('truetype');
+  font-weight: 400 900;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'FZMoFang';
+  src: url('/fonts/FZMoFHJW（文字字体）.TTF') format('truetype');
+  font-weight: 400 900;
+  font-display: block;
+}
+
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f0f2f5;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}

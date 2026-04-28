@@ -1,0 +1,16 @@
+[
+  {
+    "id": "heart",
+    "label": "心形",
+    "path": "/assets/2026-daily-prompotion/heart.png",
+    "category": "hero",
+    "source": "preset"
+  },
+  {
+    "id": "heart_2",
+    "label": "心形2",
+    "path": "/assets/2026-daily-prompotion/heart_2.png",
+    "category": "hero",
+    "source": "preset"
+  }
+]

@@ -1,0 +1,376 @@
+import { useState } from 'react'
+import type { TemplateId, TemplateProps, TemplateSlots, SampledDecorElement } from '../types'
+import { TEMPLATE_REGISTRY, TEMPLATE_INFO } from '../templates'
+import { CanvasProvider } from './DraggableCanvas'
+
+interface Props extends TemplateProps {
+  templateId: TemplateId
+  onExportRef?: (el: HTMLElement | null) => void
+  /** Required when templateId has compositeWith — props for the background template */
+  bgSlots?: TemplateSlots
+  bgSampledDecor?: SampledDecorElement[]
+  animationEnabled?: boolean
+  mode?: 'ai' | 'manual'
+  aiImage?: string
+  onModeSwitch?: (templateId: TemplateId, mode: 'ai' | 'manual') => void
+}
+
+export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSampledDecor, animationEnabled, mode, aiImage, onModeSwitch, ...props }: Props) {
+  const info = TEMPLATE_INFO[templateId]
+  const Template = TEMPLATE_REGISTRY[templateId]
+  const [selectedElement, setSelectedElement] = useState<string | null>(null)
+  console.log(`TemplatePreviewCard (${templateId}) 收到 props:`, props)
+  console.log(`TemplatePreviewCard (${templateId}) 收到 slots:`, props.slots)
+  console.log(`TemplatePreviewCard (${templateId}) 收到 bannerHero:`, props.slots?.bannerHero)
+  console.log(`TemplatePreviewCard (${templateId}) mode:`, mode, 'aiImage:', !!aiImage)
+
+  // --- Hidden export template (always rendered with forExport=true) ---
+  const renderExportTemplate = () => (
+    <div
+      ref={el => { onExportRef?.(el) }}
+      style={{ width: info.width, height: info.height, position: 'absolute', left: -99999, top: 0 }}
+    >
+      <CanvasProvider scale={1} forExport={true}>
+        <Template {...props} forExport={true} />
+      </CanvasProvider>
+    </div>
+  )
+
+  // --- AI模式的渲染 ---
+  const renderAIMode = (scale: number) => {
+    const displayW = Math.round(info.width * scale)
+    const displayH = Math.round(info.height * scale)
+
+    return (
+      <div style={{ width: displayW, height: displayH, overflow: 'hidden', position: 'relative', background: '#f5f5f5', flexShrink: 0 }}>
+        <img
+          src={aiImage}
+          alt="AI Generated"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            objectPosition: 'top left',
+          }}
+        />
+      </div>
+    )
+  }
+
+  // --- 模式切换UI ---
+  const renderModeSwitcher = () => {
+    if (!aiImage) return null
+
+    return (
+      <div style={{
+        display: 'flex',
+        gap: 8,
+        padding: 8,
+        background: 'rgba(0,0,0,0.03)',
+        borderTop: '1px solid #f0f0f0'
+      }}>
+        <button
+          onClick={() => onModeSwitch?.(templateId, 'manual')}
+          style={{
+            flex: 1,
+            padding: '6px 12px',
+            borderRadius: 8,
+            border: mode === 'manual' ? '2px solid #1677ff' : '1px solid #d9d9d9',
+            background: mode === 'manual' ? '#e6f4ff' : '#fff',
+            color: mode === 'manual' ? '#1677ff' : '#333',
+            fontSize: 12,
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s'
+          }}
+        >
+          ✏️ 手动编辑
+        </button>
+        <button
+          onClick={() => onModeSwitch?.(templateId, 'ai')}
+          style={{
+            flex: 1,
+            padding: '6px 12px',
+            borderRadius: 8,
+            border: mode === 'ai' ? '2px solid #52c41a' : '1px solid #d9d9d9',
+            background: mode === 'ai' ? '#e6f7e6' : '#fff',
+            color: mode === 'ai' ? '#52c41a' : '#333',
+            fontSize: 12,
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s'
+          }}
+        >
+          🤖 AI 生成
+        </button>
+      </div>
+    )
+  }
+
+  // --- Composite mode: render a background template, overlay this template on top ---
+  if (info.compositeWith && bgSlots && bgSampledDecor) {
+    const comp = info.compositeWith
+    const bgInfo = TEMPLATE_INFO[comp.templateId]
+    const BgTemplate = TEMPLATE_REGISTRY[comp.templateId]
+    const scale = comp.displayScale ?? 1.0
+
+    const outerW = Math.round(bgInfo.width * scale)
+    const outerH = Math.round(bgInfo.height * scale)
+
+    // 检查是否AI模式
+    if (mode === 'ai' && aiImage) {
+      return (
+        <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+          {renderExportTemplate()}
+          {renderAIMode(scale)}
+          {renderModeSwitcher()}
+          {/* Footer */}
+          <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+              {info.label}
+            </span>
+            <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+              {info.width}×{info.height}
+            </span>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+        {/* Hidden export template */}
+        {renderExportTemplate()}
+        
+        <div style={{ width: outerW, height: outerH, position: 'relative', overflow: 'visible', flexShrink: 0 }}>
+          {/* Background template — full size scaled to display */}
+          <div style={{ width: bgInfo.width, height: bgInfo.height, transform: `scale(${scale})`, transformOrigin: 'top left', position: 'absolute', top: 0, left: 0 }}>
+            <CanvasProvider scale={scale} forExport={false}>
+              <BgTemplate {...props} slots={bgSlots} sampledDecor={bgSampledDecor} forExport={false} onSelect={setSelectedElement} isSelected={selectedElement} />
+            </CanvasProvider>
+          </div>
+
+          {/* Middle frame for banner-warm (商机中心) — 351×342 at x=12,y=317, not for export */}
+          {templateId === 'banner-warm' && (
+            <div
+              style={{
+                position: 'absolute',
+                left: 12 * scale,
+                top: 317 * scale,
+                width: 351 * scale,
+                height: 342 * scale,
+                background: props.colors?.warmBg,
+                borderRadius: 12,
+                pointerEvents: 'none',
+                zIndex: 1,
+              }}
+            />
+          )}
+
+          {/* Foreground template — positioned over the background (preview only) */}
+          <div
+            style={{
+              position: 'absolute',
+              left: comp.x * scale,
+              top: comp.y * scale,
+              width: info.width * scale,
+              height: info.height * scale,
+              overflow: 'visible',
+              zIndex: 2,
+            }}
+          >
+            <div style={{ width: info.width, height: info.height, transform: `scale(${scale})`, transformOrigin: 'top left' }}>
+              <div style={{ width: info.width, height: info.height, position: 'relative' }}>
+                <CanvasProvider scale={scale} forExport={false}>
+                  <Template {...props} forExport={false} onSelect={setSelectedElement} isSelected={selectedElement} animationEnabled={animationEnabled} />
+                </CanvasProvider>
+              </div>
+            </div>
+          </div>
+
+          {/* Context overlay — UI chrome on top of everything */}
+          {comp.overlay && (
+            <img
+              src={comp.overlay}
+              alt=""
+              style={{ position: 'absolute', left: 0, top: 0, width: outerW, height: outerH, objectFit: 'contain', objectPosition: 'top left', pointerEvents: 'none', zIndex: 3 }}
+            />
+          )}
+        </div>
+
+        {renderModeSwitcher()}
+
+        {/* Footer */}
+        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
+          <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+            {info.label}
+          </span>
+          <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+            {info.width}×{info.height}
+          </span>
+        </div>
+      </div>
+    )
+  }
+
+  // --- Context preview mode: template placed over a static app-screen image ---
+  if (info.contextPreview) {
+    const ctx = info.contextPreview
+    const scale = ctx.displayScale ?? info.previewScale
+    const outerW = Math.round(ctx.bgWidth * scale)
+    const outerH = Math.round(ctx.bgHeight * scale)
+
+    // 检查是否AI模式
+    if (mode === 'ai' && aiImage) {
+      return (
+        <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+          {renderExportTemplate()}
+          {renderAIMode(scale)}
+          {renderModeSwitcher()}
+          {/* Footer */}
+          <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+              {info.label}
+            </span>
+            <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+              {info.width}×{info.height}
+            </span>
+          </div>
+        </div>
+      )
+    }
+
+    const hasOverlayOffset = (ctx.overlayX ?? 0) !== 0 || (ctx.overlayY ?? 0) !== 0
+
+    return (
+      <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+        {/* Hidden export template */}
+        {renderExportTemplate()}
+
+        <div style={{ width: outerW, height: outerH, position: 'relative', overflow: 'visible', flexShrink: 0 }}>
+          {/* Background image — omitted when the template itself is the background */}
+          {ctx.image && (
+            <img
+              src={ctx.image}
+              alt=""
+              style={{ 
+                position: 'absolute', 
+                left: 0, 
+                top: 0, 
+                width: outerW, 
+                height: outerH, 
+                objectFit: 'contain', 
+                objectPosition: 'top left',
+                pointerEvents: 'none' 
+              }}
+            />
+          )}
+          <div
+            style={{
+              position: 'absolute',
+              left: ctx.x * scale,
+              top: ctx.y * scale,
+              width: info.width * scale,
+              height: info.height * scale,
+              overflow: 'hidden',
+            }}
+          >
+            <div style={{ width: info.width, height: info.height, transform: `scale(${scale})`, transformOrigin: 'top left' }}>
+              <div style={{ width: info.width, height: info.height, position: 'relative' }}>
+                <CanvasProvider scale={scale} forExport={false}>
+                  <Template {...props} forExport={false} onSelect={setSelectedElement} isSelected={selectedElement} animationEnabled={animationEnabled} />
+                </CanvasProvider>
+              </div>
+            </div>
+          </div>
+          {/* Overlay — full-cover or positionally offset */}
+          {ctx.overlay && (
+            <img
+              src={ctx.overlay}
+              alt=""
+              style={hasOverlayOffset
+                ? { 
+                    position: 'absolute', 
+                    left: (ctx.overlayX ?? 0) * scale, 
+                    top: (ctx.overlayY ?? 0) * scale, 
+                    width: (ctx.overlayWidth ?? 351) * scale, 
+                    height: (ctx.overlayHeight ?? 350) * scale, 
+                    pointerEvents: 'none', 
+                    zIndex: 3 
+                  }
+                : { position: 'absolute', left: 0, top: 0, width: outerW, height: outerH, objectFit: 'contain', objectPosition: 'top left', pointerEvents: 'none', zIndex: 3 }
+              }
+            />
+          )}
+        </div>
+
+        {renderModeSwitcher()}
+
+        {/* Footer */}
+        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
+          <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+            {info.label}
+          </span>
+          <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+            {info.width}×{info.height}
+          </span>
+        </div>
+      </div>
+    )
+  }
+
+  // --- Standard preview mode ---
+  const scale = info.previewScale
+
+  // 检查是否AI模式
+  if (mode === 'ai' && aiImage) {
+    return (
+      <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+        {renderExportTemplate()}
+        {renderAIMode(scale)}
+        {renderModeSwitcher()}
+        {/* Footer */}
+        <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
+          <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+            {info.label}
+          </span>
+          <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+            {info.width}×{info.height}
+          </span>
+        </div>
+      </div>
+    )
+  }
+
+  const displayW = Math.round(info.width * scale)
+  const displayH = Math.round(info.height * scale)
+
+  return (
+    <div style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.07)', display: 'inline-flex', flexDirection: 'column', position: 'relative' }}>
+      {/* Hidden export template */}
+      {renderExportTemplate()}
+      
+      <div style={{ width: displayW, height: displayH, overflow: 'visible', position: 'relative', background: '#f5f5f5', flexShrink: 0 }}>
+        <div style={{ width: info.width, height: info.height, transform: `scale(${scale})`, transformOrigin: 'top left', flexShrink: 0 }}>
+          <div style={{ width: info.width, height: info.height, position: 'relative' }}>
+            <CanvasProvider scale={scale} forExport={false}>
+              <Template {...props} forExport={false} onSelect={setSelectedElement} isSelected={selectedElement} animationEnabled={animationEnabled} />
+            </CanvasProvider>
+          </div>
+        </div>
+      </div>
+
+      {renderModeSwitcher()}
+
+      {/* Footer */}
+      <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
+        <span style={{ fontSize: 12, fontWeight: 600, color: '#333', fontFamily: 'ChillRoundF, sans-serif' }}>
+          {info.label}
+        </span>
+        <span style={{ fontSize: 10, color: '#bbb', fontFamily: 'monospace' }}>
+          {info.width}×{info.height}
+        </span>
+      </div>
+    </div>
+  )
+}

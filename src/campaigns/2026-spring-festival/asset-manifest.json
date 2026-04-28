@@ -1,0 +1,59 @@
+[
+  {
+    "id": "horse-lantern",
+    "label": "马 + 心形灯笼",
+    "path": "/assets/2026-spring-festival/B4/horse-lantern.png",
+    "category": "hero",
+    "source": "B4"
+  },
+  {
+    "id": "plum-blossom",
+    "label": "梅花枝",
+    "path": "/assets/2026-spring-festival/B2/plum-blossom.png",
+    "category": "hero",
+    "source": "B2"
+  },
+  {
+    "id": "pine-tree",
+    "label": "松树盆栽",
+    "path": "/assets/2026-spring-festival/B2/pine-tree.png",
+    "category": "hero",
+    "source": "B2"
+  },
+  {
+    "id": "projector",
+    "label": "放映机",
+    "path": "/assets/2026-spring-festival/B2/projector.png",
+    "category": "hero",
+    "source": "B2"
+  },
+  {
+    "id": "red-envelope",
+    "label": "红包",
+    "path": "/assets/2026-spring-festival/B2/red-envelope.png",
+    "category": "decor",
+    "source": "B2"
+  },
+  {
+    "id": "microphone",
+    "label": "话筒",
+    "path": "/assets/2026-spring-festival/B2/microphone.png",
+    "category": "decor",
+    "source": "B2"
+  },
+  {
+    "id": "lantern",
+    "label": "灯笼",
+    "path": "/assets/2026-spring-festival/B2/lantern.png",
+    "category": "hero",
+    "source": "B2"
+  },
+  {
+    "id": "pattern-tiktok-yellow",
+    "label": "TikTok logo 底纹",
+    "path": "/assets/2026-spring-festival/B3/pattern-tiktok-yellow.png",
+    "category": "pattern",
+    "source": "B3",
+    "note": "当前版本带黄底，需从 .ai 导出透明版替换"
+  }
+]
