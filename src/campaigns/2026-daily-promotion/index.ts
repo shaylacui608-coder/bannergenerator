@@ -12,8 +12,8 @@ const defaultContent: UserContent = {
   gradientIndex: 0,
   titleSizeAdjust: 0,
   fonts: {
-    title: "'YUANHEI', sans-serif",
-    brand: "'YUANHEI', sans-serif",
+    title: "'YuanHei', sans-serif",
+    brand: "'YuanHei', sans-serif",
   },
 }
 

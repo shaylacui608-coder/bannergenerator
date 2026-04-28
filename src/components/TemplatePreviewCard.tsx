@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { TemplateId, TemplateProps, TemplateSlots, SampledDecorElement } from '../types'
 import { TEMPLATE_REGISTRY, TEMPLATE_INFO } from '../templates'
 import { CanvasProvider } from './DraggableCanvas'
+import { mergeColors } from '../templates/fonts'
 
 interface Props extends TemplateProps {
   templateId: TemplateId
@@ -25,14 +26,18 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
   console.log(`TemplatePreviewCard (${templateId}) mode:`, mode, 'aiImage:', !!aiImage)
 
   // --- Hidden export template (always rendered with forExport=true) ---
+  // 外层负责将元素移出视野；ref 挂在内层 (position 0,0) 上，
+  // 这样 html-to-image 捕获时不会因 left:-99999 导致内容渲染在 SVG viewBox 之外。
   const renderExportTemplate = () => (
-    <div
-      ref={el => { onExportRef?.(el) }}
-      style={{ width: info.width, height: info.height, position: 'absolute', left: -99999, top: 0 }}
-    >
-      <CanvasProvider scale={1} forExport={true}>
-        <Template {...props} forExport={true} />
-      </CanvasProvider>
+    <div style={{ position: 'absolute', left: -99999, top: 0, pointerEvents: 'none' }} aria-hidden="true">
+      <div
+        ref={el => { onExportRef?.(el) }}
+        style={{ width: info.width, height: info.height }}
+      >
+        <CanvasProvider scale={1} forExport={true}>
+          <Template {...props} forExport={true} />
+        </CanvasProvider>
+      </div>
     </div>
   )
 
@@ -283,6 +288,43 @@ export function TemplatePreviewCard({ templateId, onExportRef, bgSlots, bgSample
               </div>
             </div>
           </div>
+          {/* banner-warm 专属：背景卡片 frame + 覆盖层，仅预览，不导出 */}
+          {templateId === 'banner-warm' && (() => {
+            const effectiveColors = mergeColors(props.colors, props.content.customColors)
+            return (
+              <>
+                {/* 渐变背景 frame */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: 12 * scale,
+                    top: 314 * scale,
+                    width: 351 * scale,
+                    height: 327 * scale,
+                    background: effectiveColors.warmBg,
+                    borderRadius: 12 * scale,
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                  }}
+                />
+                {/* UI 覆盖层 */}
+                <img
+                  src="/assets/context/daily_商机中心APP覆盖层.png"
+                  alt=""
+                  style={{
+                    position: 'absolute',
+                    left: 23 * scale,
+                    top: 303 * scale,
+                    width: 328 * scale,
+                    height: 306 * scale,
+                    pointerEvents: 'none',
+                    zIndex: 2,
+                  }}
+                />
+              </>
+            )
+          })()}
+
           {/* Overlay — full-cover or positionally offset */}
           {ctx.overlay && (
             <img

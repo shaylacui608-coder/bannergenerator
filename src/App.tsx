@@ -19,7 +19,8 @@ const PLATFORMS: Platform[] = ['app', 'pc']
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<string>('home')
-  const [campaignId, setCampaignId] = useState(CAMPAIGNS[0].id)
+  const initialCampaignId = CAMPAIGNS.find(c => !c.disabled)?.id ?? CAMPAIGNS[0].id
+  const [campaignId, setCampaignId] = useState(initialCampaignId)
   const [seeds, setSeeds] = useState<Record<TemplateId, number>>(() =>
     Object.fromEntries(ALL_TEMPLATE_IDS.map(id => [id, randomSeed()])) as Record<TemplateId, number>
   )
@@ -160,7 +161,26 @@ export default function App() {
   }, [modifiedTemplateSlots, selectedDecorPaths])
 
   const handleCampaignChange = (id: string) => {
-    const c = CAMPAIGNS.find(x => x.id)!
+    const c = CAMPAIGNS.find(x => x.id)
+    if (!c || c.disabled) {
+      const availableCampaign = CAMPAIGNS.find(c2 => !c2.disabled)
+      if (availableCampaign) {
+        alert('该场景暂未开放，已为您切换到可用场景')
+        setCampaignId(availableCampaign.id)
+        setContent(availableCampaign.defaultContent)
+        
+        const newTemplateGroups = availableCampaign.sectionConfig?.templateGroups ?? DEFAULT_TEMPLATE_GROUPS
+        const firstAppSection = Object.keys(newTemplateGroups.app)[0]
+        const firstPcSection = Object.keys(newTemplateGroups.pc)[0]
+        
+        setActiveSection({
+          app: firstAppSection ?? 'banner',
+          pc: firstPcSection ?? 'banner',
+        })
+      }
+      return
+    }
+    
     setCampaignId(id)
     setContent(c.defaultContent)
     

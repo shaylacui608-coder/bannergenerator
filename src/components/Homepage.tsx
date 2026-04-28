@@ -205,15 +205,6 @@ export function Homepage({ onStartCreating, onStartAIGenerate }: { onStartCreati
           
           {/* Hero Content */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '6rem 1rem 0' }}>
-            <div style={{ animation: 'slideUp 0.6s ease-out 0.4s both' }}>
-              <div className="liquid-glass" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', borderRadius: '9999px', padding: '0.375rem 0.375rem 0.375rem 0.25rem' }}>
-                <span style={{ background: '#fff', color: '#000', borderRadius: '9999px', padding: '0.25rem 0.75rem', fontSize: '0.75rem', fontWeight: 600, fontFamily: 'ChillRoundF, DouyinSans, sans-serif' }}>全新</span>
-                <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.875rem', paddingRight: '0.75rem', fontFamily: 'ChillRoundF, DouyinSans, sans-serif' }}>
-                  AI驱动的Banner生成器现已上线
-                </span>
-              </div>
-            </div>
-            
             <div style={{ animation: 'slideUp 0.6s ease-out 0.6s both', marginTop: '3rem', textAlign: 'center' }}>
               <h1 style={{ fontSize: '3.75rem', lineHeight: '0.8', letterSpacing: '-4px', maxWidth: '40rem' }} className="font-heading">
                 一键生成全套banner

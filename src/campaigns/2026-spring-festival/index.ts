@@ -19,6 +19,7 @@ export const springFestival2026: CampaignConfig = {
   colors,
   templateSlots: templateSlots as CampaignConfig['templateSlots'],
   defaultContent,
+  disabled: true,
   assets: {
     hero: ASSETS.filter(a => a.category === 'hero').map(a => ({
       id: a.id,

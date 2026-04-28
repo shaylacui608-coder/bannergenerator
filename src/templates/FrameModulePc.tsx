@@ -5,7 +5,7 @@ import { mergeColors, getFonts, titleSize } from './fonts'
 import { DraggableElement, useTemplateState } from '../components/DraggableCanvas'
 
 const W = 876
-const H = 409
+const H = 389
 
 export function FrameModulePc({ colors: defaultColors, content, slots, sampledDecor, onSelect, isSelected, forExport, animationEnabled }: TemplateProps & { onSelect?: (key: string) => void; isSelected?: string | null; forExport?: boolean; animationEnabled?: boolean }) {
   const colors = mergeColors(defaultColors, content.customColors)

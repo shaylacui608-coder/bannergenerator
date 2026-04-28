@@ -77,7 +77,7 @@ export interface CozeWorkflowRequest {
   // 颜色
   colors: {
     primary: string
-    gradients: Array<[string, string]>
+    gradients: Array<string[]>
   }
 }
 

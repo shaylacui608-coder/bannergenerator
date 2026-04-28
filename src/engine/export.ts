@@ -7,11 +7,16 @@ const TEMPLATE_LABELS: Record<TemplateId, string> = {
   'banner-slim': 'banner_超细通栏',
   'banner-standard': 'banner_标准横幅',
   'banner-warm': 'banner_暖色横幅',
+  'banner-card': 'banner_商机中心PC',
   'frame-single': '画框_单列',
   'frame-titled': '画框_带标题',
+  'frame-module': '模块_APP活动',
+  'frame-module-pc': '模块_PC活动',
   'frame-grid': '画框_四宫格',
   'background-arc': '背景_弧形角色',
   'background-simple': '背景_简洁渐变',
+  'background-activity': '背景_APP活动页',
+  'background-activity-pc': '背景_PC活动页',
 }
 
 async function waitForFonts() {

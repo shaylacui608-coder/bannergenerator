@@ -9,7 +9,7 @@ export interface ColorPalette {
   mint?: string
   textOnDark: string
   textOnLight: string
-  gradients: [string, string][]
+  gradients: string[][]
 }
 
 export interface DecorElementRule {
@@ -83,6 +83,7 @@ export interface CampaignConfig {
   }
   assetManifest: any[]
   saveManifest: (campaignId: string, assets: any[]) => Promise<void>
+  disabled?: boolean
 }
 
 export type TemplateId =
